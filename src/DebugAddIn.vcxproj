@@ -58,24 +58,16 @@
   <ImportGroup Label="Shared">
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props"
-      Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')"
-      Label="LocalAppDataPlatform" />
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props"
-      Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')"
-      Label="LocalAppDataPlatform" />
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props"
-      Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')"
-      Label="LocalAppDataPlatform" />
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props"
-      Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')"
-      Label="LocalAppDataPlatform" />
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -139,11 +131,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Globals.cpp" />
     <ClCompile Include="DllMain.cpp" />
     <ClCompile Include="DllReg.cpp" />
+    <ClCompile Include="Logging.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DebugAddIn.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Globals.h" />
+    <ClInclude Include="Logging.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
