@@ -1,0 +1,9 @@
+# The .vs folder is created by Visual Studio and contains IDE-specific settings,
+# caches, and temporary files. These files are not needed for source control and
+# can be safely ignored.
+.vs
+
+# The *.vcxproj.user files store user-specific project preferences, such as debug
+# settings and environment variables. These settings are unique to each developer
+# and should not be shared in version control.
+*.vcxproj.user

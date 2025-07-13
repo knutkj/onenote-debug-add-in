@@ -1,0 +1,4 @@
+; Documented in DllReg.md.
+LIBRARY DebugAddIn
+EXPORTS
+    DllRegisterServer PRIVATE
