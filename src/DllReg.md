@@ -102,7 +102,11 @@ extern "C" HRESULT __stdcall DllRegisterServer()
   success or error. See [`DllMain.md`](DllMain.md) for more on return types.
 - **Calling Convention (`__stdcall`)**: Standard calling convention for
   Windows/COM functions. Ensures parameters and stack are handled as expected by
-  the OS.
+  the OS. Unlike the DLL entry point `DllMain`, which is using the `APIENTRY`
+  macro, COM functions such as `DllRegisterServer` do not use `APIENTRY`.
+  Instead, they use the `__stdcall` calling convention explicitly, as shown
+  above. This is the standard and required convention for COM registration
+  functions.
 - **Function Name (`DllRegisterServer`)**: Standard function name for COM DLL
   registration. Windows expects this exact name when registering COM servers.
 
@@ -117,7 +121,7 @@ entries so the system can locate and use the COM objects in this DLL. For simple
 DLLs, this may be a stub; for production code, it typically writes registry keys
 describing the COM classes, interfaces, and type libraries.
 
-### The COM Server Term
+### The COM Server Terminology
 
 A COM server is any executable (DLL or EXE) that implements one or more COM
 objects—reusable software components that expose well-defined interfaces for

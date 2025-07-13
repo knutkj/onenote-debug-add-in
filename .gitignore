@@ -1,2 +1,3 @@
 ﻿out
 tmp
+.claude/*.local.json
