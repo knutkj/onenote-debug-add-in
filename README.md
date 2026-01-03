@@ -9,7 +9,7 @@ in all of these, this repository might not be useful to you.
 ## What you can Learn from a high level Perspective
 
 - Build a OneNote add-in from scratch in native code.
-- How the COM supportedf DLL is registered in the Windows registry.
+- How the COM supported DLL is registered in the Windows registry.
 - How OneNote:
   - Loads the assembly.
   - Uses the assembly.

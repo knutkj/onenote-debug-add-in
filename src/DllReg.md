@@ -11,6 +11,13 @@ These tools locate and invoke the function by name through the DLL's export
 table, allowing the COM DLL to register itself with the system so its COM
 objects can be discovered and used by other applications.
 
+[thefunc]:
+  https://learn.microsoft.com/en-us/windows/win32/api/olectl/nf-olectl-dllregisterserver
+  "DllRegisterServer function (olectl.h)"
+[com]:
+  https://learn.microsoft.com/en-us/windows/win32/com/component-object-model--com--portal
+  "Component Object Model (COM)"
+
 ## Component Object Model (COM)
 
 The Component Object Model (COM) is a Microsoft technology for enabling
@@ -128,9 +135,60 @@ clients can discover and instantiate them. COM servers are a foundational part
 of Windows extensibility, enabling automation, inter-process communication, and
 integration between applications and system components.
 
-[thefunc]:
-  https://learn.microsoft.com/en-us/windows/win32/api/olectl/nf-olectl-dllregisterserver
-  "DllRegisterServer function (olectl.h)"
-[com]:
-  https://learn.microsoft.com/en-us/windows/win32/com/component-object-model--com--portal
-  "Component Object Model (COM)"
+---
+
+## Appendix: COM Support in .NET
+
+In .NET, the low-level `DllRegisterServer` mechanism is abstracted away through
+**COM Interop**. Here is how .NET adheres to the concepts described:
+
+### Registration Tool (`regasm.exe`)
+
+While native DLLs use `regsvr32.exe` to call `DllRegisterServer`, .NET
+assemblies use **`regasm.exe`** (Assembly Registration Tool). This tool reads
+the assembly's metadata and populates the Windows Registry with the necessary
+COM keys (CLSID, ProgID, etc.).
+
+### The "Server" is `mscoree.dll`
+
+In the registry, a .NET COM object's `InprocServer32` key doesn't point to your
+.NET DLL directly. Instead, it points to **`mscoree.dll`** (the .NET Runtime
+Execution Engine). When a COM client requests your object, Windows loads
+`mscoree.dll`, which then locates and loads your specific .NET assembly and
+class.
+
+### Attributes instead of Exports
+
+Instead of manually managing an export table or `.def` file, .NET developers use
+attributes:
+
+- **`[ComVisible(true)]`**: Marks a class or interface as accessible to COM.
+- **`[Guid("...")]`**: Explicitly sets the CLSID or IID.
+- **`[ComRegisterFunction]`**: Marks a method to be executed during
+  registration, serving the same purpose as adding custom logic inside a native
+  `DllRegisterServer` function.
+
+### Type Libraries
+
+Native COM often uses `.idl` files to define interfaces. .NET can generate a
+**Type Library (`.tlb`)** file from the assembly metadata, allowing COM clients
+(like OneNote or VBA) to understand the methods and properties your .NET code
+exposes.
+
+## Appendix: Manual Registration
+
+While `DllRegisterServer` is the standard way to register a COM DLL, it is **not
+strictly required** for the DLL to function. The function's primary purpose is
+to provide a standardized entry point for tools like `regsvr32.exe`.
+
+If necessary, you can register a COM DLL manually by adding the required keys
+directly to the Windows Registry (e.g., using a `.reg` file). At a minimum, you
+would need to define:
+
+1.  **CLSID**: A unique identifier for the COM class.
+2.  **InprocServer32**: A key pointing to the absolute path of your DLL.
+3.  **ProgID**: A human-readable name for the COM object.
+
+`DllRegisterServer` is preferred because it encapsulates this logic within the
+DLL itself, ensuring that the correct registry structure is created without
+requiring the user to know the internal implementation details.
