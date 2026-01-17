@@ -1,6 +1,8 @@
 // Documented in DllMain.md.
 
 #include <windows.h>
+#include "Globals.h"
+#include "Logging.h"
 
 BOOL APIENTRY DllMain(
     HMODULE hModule,
@@ -10,16 +12,18 @@ BOOL APIENTRY DllMain(
     switch (ul_reason_for_call)
     {
     case DLL_PROCESS_ATTACH:
-        // Code to run when the DLL is loaded into a process
+        g_hModule = hModule;
+        LogProcess();
+        Log(__func__, "DLL_PROCESS_ATTACH - DLL loaded into process");
         break;
     case DLL_THREAD_ATTACH:
-        // Code to run when a new thread is created in the process
+        Log(__func__, "DLL_THREAD_ATTACH - New thread created in process");
         break;
     case DLL_THREAD_DETACH:
-        // Code to run when a thread exits cleanly
+        Log(__func__, "DLL_THREAD_DETACH - Thread exiting cleanly");
         break;
     case DLL_PROCESS_DETACH:
-        // Code to run when the DLL is unloaded from the process
+        Log(__func__, "DLL_PROCESS_DETACH - DLL being unloaded from process");
         break;
     }
 
